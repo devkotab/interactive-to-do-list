@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const taskInput = document.getElementById("taskInput");
+    const deadlineInput = document.getElementById("deadlineInput");
     const addTaskBtn = document.getElementById("addTaskBtn");
     const taskList = document.getElementById("taskList");
 
@@ -8,10 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     addTaskBtn.addEventListener("click", function () {
         const taskText = taskInput.value.trim();
+        const deadline = deadlineInput.value.trim(); // Get the deadline value
         if (taskText !== "") {
-            addTask(taskText);
+            addTask(taskText, deadline);
             saveTasks();
             taskInput.value = "";
+            deadlineInput.value = ""; // Clear the deadline input after adding task
         }
     });
 
@@ -22,11 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    function addTask(text) {
+    function addTask(text, deadline) {
         const taskItem = document.createElement("li");
         taskItem.className = "task";
         taskItem.innerHTML = `
             <span>${text}</span>
+            <span class="deadline">Deadline: ${deadline}</span>
             <button class="deleteBtn">Delete</button>
         `;
         taskList.appendChild(taskItem);
@@ -34,8 +38,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveTasks() {
         const tasks = [];
-        document.querySelectorAll(".task span").forEach(task => {
-            tasks.push(task.textContent);
+        document.querySelectorAll(".task").forEach(taskItem => {
+            const taskText = taskItem.querySelector("span").textContent;
+            const deadline = taskItem.querySelector(".deadline").textContent.split(":")[1].trim();
+            tasks.push({ text: taskText, deadline: deadline });
         });
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
@@ -43,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function loadTasks() {
         const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
         tasks.forEach(task => {
-            addTask(task);
+            addTask(task.text, task.deadline);
         });
     }
 });

@@ -12,11 +12,39 @@ h1 {
     text-align: center;
 }
 
-input[type="text"] {
-    width: 80%;
-    padding: 8px;
-    margin: 10px 0;
+.input-group {
+    display: flex;
+    align-items: center;
 }
+
+.input-group input[type="text"] {
+    flex: 1;
+    /* The task input field takes up remaining space */
+    padding: 8px;
+    margin-right: 10px;
+    /* Add some spacing between the inputs */
+}
+
+.input-group input[type="date"] {
+    width: 150px;
+    /* Adjust the width of the date input */
+    padding: 8px;
+    margin-right: 10px;
+    /* Add some spacing between the inputs */
+}
+
+.input-group button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.input-group button:hover {
+    background-color: #0056b3;
+}
+
 
 button {
     padding: 8px 16px;
@@ -29,6 +57,7 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
 
 .task {
     margin-bottom: 10px;
