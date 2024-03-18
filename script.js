@@ -53,3 +53,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// Configure live-server to listen on all network interfaces
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.hostname === '127.0.0.1') {
+        const script = document.createElement('script');
+        script.innerHTML = `
+            liveServer = new LiveServer(
+                location.hostname,
+                parseInt(location.port) || 80,
+                location.pathname
+            );
+            liveServer.init();
+        `;
+        document.body.appendChild(script);
+    }
+});
